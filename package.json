@@ -9,9 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@apollo/server": "^4.12.0",
+    "@as-integrations/next": "^3.2.0",
+    "@nextui-org/react": "^2.6.11",
+    "apollo-server-core": "^3.13.0",
+    "dotenv": "^16.5.0",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6",
+    "mongoose": "^8.14.1",
+    "next": "15.3.1",
+    "pg": "^8.15.6",
+    "pg-hstore": "^2.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.1"
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
