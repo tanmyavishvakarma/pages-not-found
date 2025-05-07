@@ -1,11 +1,9 @@
 'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useMutation } from '@apollo/client';
-import { CREATE_REVIEW, GET_BOOK } from '../../api/graphql/queries';
+import { CREATE_REVIEW, GET_BOOK, GET_REVIEWS } from '../../api/graphql/queries';
 
 const ReviewForm = ({ bookId, onSuccess }) => {
-    const router = useRouter();
     const [formData, setFormData] = useState({
         reviewerName: '',
         rating: '5',
@@ -13,11 +11,8 @@ const ReviewForm = ({ bookId, onSuccess }) => {
     });
 
     const [createReview] = useMutation(CREATE_REVIEW, {
-        refetchQueries: [{ query: GET_BOOK, variables: { id: bookId } }],
-        onCompleted: () => {
-            if (onSuccess) onSuccess();
-            router.push('/books');
-        },
+        refetchQueries: [{ query: GET_REVIEWS, variables: { bookId: parseInt(bookId) } }],
+        fetchPolicy: 'network-only'
     });
 
     const handleChange = (e) => {

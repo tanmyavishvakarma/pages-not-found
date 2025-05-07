@@ -15,8 +15,9 @@ const AuthorDetailPage = ({ params }) => {
         variables: { id },
     });
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading) return <p className="p-4">Loading...</p>;
+    if (error) return <p className="p-4 text-red-500">Error: {error.message}</p>;
+    if (!data?.author) return <p className="p-4 text-center">Author not found</p>;
 
     const author = data.author;
 
@@ -25,7 +26,7 @@ const AuthorDetailPage = ({ params }) => {
     };
 
     return (
-        <div>
+        <div className="p-4">
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                 <div className="flex justify-between items-start">
                     <div>

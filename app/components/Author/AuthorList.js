@@ -1,3 +1,4 @@
+
 'use client'
 import { useState } from 'react';
 import Link from 'next/link';
@@ -51,7 +52,7 @@ const AuthorList = () => {
             </div>
 
             {loading ? (
-                <div className="flex justify-center items-center h-64">
+                <div className="flex justify-start items-center h-64">
                     <p>Loading authors...</p>
                 </div>
             ) : error ? (

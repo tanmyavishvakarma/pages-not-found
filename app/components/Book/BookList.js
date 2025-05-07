@@ -92,7 +92,7 @@ const BookList = () => {
             </div>
 
             {loading ? (
-                <div className="flex justify-center items-center h-64">
+                <div className="flex justify-start items-center h-64">
                     <p>Loading books...</p>
                 </div>
             ) : error ? (

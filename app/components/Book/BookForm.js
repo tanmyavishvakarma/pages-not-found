@@ -72,7 +72,7 @@ const BookForm = ({ book = null, onSuccess }) => {
 
             <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="authorId">
-                    Author ID
+                    Author
                 </label>
                 <select
                     id="authorId"
