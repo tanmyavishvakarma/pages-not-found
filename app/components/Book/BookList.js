@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
-import { GET_BOOKS } from '@/app/api/graphql/queries';
+import { GET_BOOKS, GET_AUTHORS } from '@/app/api/graphql/queries';
 import Pagination from '../Pagination';
 import BookPreview from './BookPreview';
 
@@ -21,11 +21,18 @@ const BookList = () => {
         nextFetchPolicy: 'network-only',
     });
 
+    const { data: authorsData, loading: authorsLoading, error: authorsError } = useQuery(GET_AUTHORS, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'network-only',
+    });
+
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilter({ ...filter, [name]: value });
         setPage(1);
     };
+
+    const authors = authorsData?.authors?.items || [];
 
     return (
         <div>
@@ -53,14 +60,26 @@ const BookList = () => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Author ID</label>
-                        <input
-                            type="number"
+                        <label className="block text-sm font-medium text-gray-700">Author</label>
+                        <select
                             name="authorId"
                             value={filter.authorId}
                             onChange={handleFilterChange}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        />
+                        >
+                            <option value="">All Authors</option>
+                            {authorsLoading ? (
+                                <option disabled>Loading authors...</option>
+                            ) : authorsError ? (
+                                <option disabled>Error loading authors</option>
+                            ) : (
+                                authors.map((author) => (
+                                    <option key={author.id} value={author.id}>
+                                        {author.name}
+                                    </option>
+                                ))
+                            )}
+                        </select>
                     </div>
                 </div>
             </div>
@@ -86,9 +105,9 @@ const BookList = () => {
                         ))}
                     </div>
 
-                    <Pagination 
-                        page={page} 
-                        setPage={setPage} 
+                    <Pagination
+                        page={page}
+                        setPage={setPage}
                         totalPages={data.books.totalPages}
                     />
                 </>

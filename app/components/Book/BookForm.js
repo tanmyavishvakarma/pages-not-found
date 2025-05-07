@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { CREATE_BOOK, UPDATE_BOOK, GET_BOOKS } from '../../api/graphql/queries';
+import { useMutation, useQuery } from '@apollo/client';
+import { CREATE_BOOK, UPDATE_BOOK, GET_BOOKS, GET_AUTHORS } from '../../api/graphql/queries';
 
 const BookForm = ({ book = null, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -17,6 +17,12 @@ const BookForm = ({ book = null, onSuccess }) => {
     const [updateBook] = useMutation(UPDATE_BOOK, {
         refetchQueries: [{ query: GET_BOOKS }],
         onCompleted: onSuccess,
+    });
+
+    const { data } = useQuery(GET_AUTHORS, {
+        variables: {},
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'network-only',
     });
 
     const handleChange = (e) => {
@@ -68,15 +74,21 @@ const BookForm = ({ book = null, onSuccess }) => {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="authorId">
                     Author ID
                 </label>
-                <input
+                <select
                     id="authorId"
                     name="authorId"
-                    type="number"
                     value={formData.authorId}
                     onChange={handleChange}
                     required
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+                >
+                    <option value="">Select an author</option>
+                    {data?.authors?.items?.map((author) => (
+                        <option key={author.id} value={author.id}>
+                            {author.name} - ID:{author.id}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <div className="flex items-center justify-between">

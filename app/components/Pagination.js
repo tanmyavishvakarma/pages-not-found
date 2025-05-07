@@ -22,7 +22,7 @@ const Pagination = ({ page, setPage, totalPages = 1 }) => {
                     Previous
                 </button>
                 <span className="px-3 py-2 bg-white border-t border-b border-gray-300 text-gray-700">
-                    Page {page} of {totalPages}
+                    Page {page} of {totalPages > 0 ? totalPages : "1"}
                 </span>
                 <button
                     onClick={goToNext}
