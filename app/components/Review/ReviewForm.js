@@ -1,7 +1,8 @@
+'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useMutation } from '@apollo/client';
-import { CREATE_REVIEW, GET_BOOK } from '../../lib/queries';
+import { CREATE_REVIEW, GET_BOOK } from '../../api/graphql/queries';
 
 const ReviewForm = ({ bookId, onSuccess }) => {
     const router = useRouter();

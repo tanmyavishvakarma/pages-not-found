@@ -1,12 +1,13 @@
+
+'use client'
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_BOOK, CREATE_REVIEW } from '../../lib/queries';
-import { useRouter } from 'next/router';
+import { GET_BOOK, CREATE_REVIEW } from '../../api/graphql/queries';
 import ReviewForm from '../../components/Review/ReviewForm';
 import ReviewList from '../../components/Review/ReviewList';
+import { use } from 'react';
 
-export default function BookDetail() {
-  const router = useRouter();
-  const { id } = router.query;
+export default function BookDetail({params}) {
+  const { id } = use(params);
   
   const { loading, error, data } = useQuery(GET_BOOK, {
     variables: { id },

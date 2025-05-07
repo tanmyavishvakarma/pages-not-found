@@ -27,9 +27,6 @@ const BookList = () => {
         setPage(1);
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
     return (
         <div>
             <div className="mb-6 p-4 bg-white rounded shadow">
@@ -75,17 +72,27 @@ const BookList = () => {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {data.books.items.map((book) => (
-                    <BookPreview key={book.id} book={book} />
-                ))}
-            </div>
+            {loading ? (
+                <div className="flex justify-center items-center h-64">
+                    <p>Loading books...</p>
+                </div>
+            ) : error ? (
+                <p className="text-red-500">Error: {error.message}</p>
+            ) : (
+                <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {data.books.items.map((book) => (
+                            <BookPreview key={book.id} book={book} />
+                        ))}
+                    </div>
 
-            <Pagination 
-                page={page} 
-                setPage={setPage} 
-                totalPages={data.books.totalPages}
-            />
+                    <Pagination 
+                        page={page} 
+                        setPage={setPage} 
+                        totalPages={data.books.totalPages}
+                    />
+                </>
+            )}
         </div>
     );
 };

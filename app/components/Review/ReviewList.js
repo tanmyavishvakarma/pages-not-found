@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { GET_REVIEWS } from '../../lib/queries';
+import { GET_REVIEWS } from '../../api/graphql/queries';
 import ReviewCard from './ReviewCard';
 
 const ReviewList = ({ bookId }) => {

@@ -1,12 +1,12 @@
 'use client'
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import AuthorForm from '../../components/Author/AuthorForm';
 import { GET_AUTHOR } from '@/app/api/graphql/queries';
 
 const AuthorDetailPage = ({ params }) => {
-    const { id } = params;
+    const { id } = use(params);
     const [isEditing, setIsEditing] = useState(false);
 
     const { loading, error, data } = useQuery(GET_AUTHOR, {

@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
@@ -26,9 +25,6 @@ const AuthorList = () => {
         setPage(1);
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
     return (
         <div>
             <div className="mb-6 p-4 bg-white rounded shadow">
@@ -54,13 +50,23 @@ const AuthorList = () => {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {data.authors.items.map((author) => (
-                    <AuthorPreview key={author.id} author={author} />
-                ))}
-            </div>
+            {loading ? (
+                <div className="flex justify-center items-center h-64">
+                    <p>Loading authors...</p>
+                </div>
+            ) : error ? (
+                <p className="text-red-500">Error: {error.message}</p>
+            ) : (
+                <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {data.authors.items.map((author) => (
+                            <AuthorPreview key={author.id} author={author} />
+                        ))}
+                    </div>
 
-            <Pagination page={page} setPage={setPage} />
+                    <Pagination page={page} setPage={setPage} />
+                </>
+            )}
         </div>
     );
 };
